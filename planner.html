@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Academic Planner — manage your tasks, assignments and study schedule.">
+  <title>Academic Planner | Ebube Junior Michael</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">EJM<span class="dot">.</span></a>
+      <button class="mobile-menu-btn" id="menu-btn" aria-label="Toggle menu">&#9776;</button>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="planner.html" class="active">Planner</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== PLANNER ===== -->
+  <main>
+    <section class="section" style="padding-top: calc(var(--space-20) + 64px);">
+      <div class="container">
+        <div class="planner-wrap">
+
+          <!-- Header -->
+          <p class="section-label animate">Productivity</p>
+          <h1 class="animate delay-1" style="font-size: var(--text-4xl); margin-bottom: var(--space-3);">Academic Planner</h1>
+          <p class="animate delay-2" style="margin-bottom: var(--space-8);">Track your tasks, assignments, and study goals in one place.</p>
+
+          <!-- Dashboard -->
+          <div class="planner-dashboard card animate delay-2">
+            <div class="dash-stats">
+              <div class="stat-box">
+                <span id="stat-total" class="stat-num">0</span>
+                <span class="stat-label">Total Tasks</span>
+              </div>
+              <div class="stat-box">
+                <span id="stat-todo" class="stat-num" style="color: var(--color-danger);">0</span>
+                <span class="stat-label">To Do</span>
+              </div>
+              <div class="stat-box">
+                <span id="stat-progress" class="stat-num" style="color: var(--color-warning);">0</span>
+                <span class="stat-label">In Progress</span>
+              </div>
+              <div class="stat-box">
+                <span id="stat-done" class="stat-num" style="color: var(--color-success);">0</span>
+                <span class="stat-label">Completed</span>
+              </div>
+            </div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Add task form -->
+          <form id="task-form" class="card animate delay-2" style="margin-top: var(--space-4);">
+            <p class="section-label" style="margin-bottom: var(--space-3);">New Task</p>
+            <div class="task-inputs">
+              <input type="text" id="task-input" class="form-control" placeholder="What needs to be done?" autocomplete="off" required style="flex: 2;">
+              <select id="task-category" class="form-control" required style="flex: 1;">
+                <option value="" disabled selected>Category</option>
+                <option value="Study">Study</option>
+                <option value="Assignment">Assignment</option>
+                <option value="Project">Project</option>
+                <option value="General">General</option>
+              </select>
+              <select id="task-priority" class="form-control" required style="flex: 1;">
+                <option value="" disabled selected>Priority</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+              <button type="submit" class="btn btn-primary" style="flex: 1;">Add Task</button>
+            </div>
+          </form>
+
+          <!-- Kanban Board -->
+          <div class="kanban-board animate delay-3">
+            
+            <!-- Column: To Do -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <h3>To Do</h3>
+                <span class="kanban-badge" id="count-todo">0</span>
+              </div>
+              <div class="kanban-dropzone" id="zone-todo" data-status="todo"></div>
+            </div>
+
+            <!-- Column: In Progress -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <h3>In Progress</h3>
+                <span class="kanban-badge" id="count-progress">0</span>
+              </div>
+              <div class="kanban-dropzone" id="zone-progress" data-status="progress"></div>
+            </div>
+
+            <!-- Column: Done -->
+            <div class="kanban-col">
+              <div class="kanban-header">
+                <h3>Done</h3>
+                <span class="kanban-badge" id="count-done">0</span>
+              </div>
+              <div class="kanban-dropzone" id="zone-done" data-status="done"></div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Ebube Junior Michael &mdash; Miva Open University, Cybersecurity &mdash; 2025/A/CYB/0612</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/planner.js"></script>
+</body>
+</html>

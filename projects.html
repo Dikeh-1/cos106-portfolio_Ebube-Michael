@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Projects by Ebube Junior Michael — Tales and Treasures, Lumina Literacy, Overwatch, and video editing work.">
+  <title>Projects | Ebube Junior Michael</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ---- Featured Projects ---- */
+    .featured-projects {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    .featured-card {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color var(--transition), transform var(--transition);
+      background: var(--color-surface);
+    }
+    .featured-card:hover {
+      border-color: rgba(59,130,246,0.35);
+      transform: translateY(-2px);
+    }
+    .featured-logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8);
+      flex-shrink: 0;
+    }
+    .featured-logo-wrap img {
+      width: 100%;
+      max-width: 160px;
+      height: auto;
+      object-fit: contain;
+    }
+    .featured-body {
+      padding: var(--space-6) var(--space-8);
+      border-left: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+    }
+    .featured-body p { flex: 1; }
+    .featured-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: var(--space-5);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--color-border);
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    /* ---- Reel Gallery ---- */
+    .reel-section {
+      margin-top: var(--space-16);
+    }
+    .reel-player {
+      background: #000;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      aspect-ratio: 16/9;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .reel-player video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .reel-thumbs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    .reel-thumb {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 2px solid var(--color-border);
+      cursor: pointer;
+      transition: border-color var(--transition), transform var(--transition);
+      aspect-ratio: 9/16;
+      background: var(--color-surface);
+      position: relative;
+    }
+    .reel-thumb.active {
+      border-color: var(--color-accent);
+    }
+    .reel-thumb:hover {
+      border-color: rgba(59,130,246,0.5);
+      transform: translateY(-2px);
+    }
+    .reel-thumb video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+    .reel-thumb-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 6px 8px;
+      background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: #fff;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    .reel-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: var(--space-5);
+      padding: var(--space-4) var(--space-5);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+    .reel-now-playing {
+      font-size: var(--text-xs);
+      color: var(--color-text-3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .reel-title-display {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-1);
+      margin-top: 4px;
+    }
+    .reel-counter {
+      font-size: var(--text-xs);
+      color: var(--color-text-3);
+    }
+
+    /* ---- Design gallery cards ---- */
+    .design-card .design-thumb {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .design-card:hover .design-thumb,
+    .design-card:focus .design-thumb {
+      border-color: rgba(59,130,246,0.5);
+      transform: translateY(-3px);
+    }
+    .design-card .design-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.4s ease;
+      display: block;
+    }
+    .design-card:hover .design-thumb img {
+      transform: scale(1.04);
+    }
+    .design-caption {
+      display: block;
+      margin-top: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-3);
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+    /* Lightbox hover states */
+    #lb-prev:hover, #lb-next:hover {
+      background: rgba(255,255,255,0.18) !important;
+    }
+
+    @media (max-width: 900px) {
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-logo-wrap { padding: var(--space-6); border-bottom: 1px solid var(--color-border); }
+      .featured-body { border-left: none; }
+      .reel-thumbs { grid-template-columns: repeat(3, 1fr); }
+      #design-gallery { grid-template-columns: repeat(3, 1fr) !important; }
+    }
+    @media (max-width: 540px) {
+      .reel-thumbs { grid-template-columns: repeat(2, 1fr); }
+      #design-gallery { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">EJM<span class="dot">.</span></a>
+      <button class="mobile-menu-btn" id="menu-btn" aria-label="Toggle menu">&#9776;</button>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="planner.html">Planner</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== PROJECTS ===== -->
+  <main>
+    <section class="section" style="padding-top: calc(var(--space-20) + 64px);">
+      <div class="container">
+
+        <!-- Header -->
+        <p class="section-label animate">Portfolio</p>
+        <h1 class="animate delay-1" style="font-size: var(--text-4xl); margin-bottom: var(--space-4);">Selected Projects</h1>
+        <p class="section-subtitle animate delay-2">A selection of recent work across web development, AI-powered security, and digital media production.</p>
+
+        <!-- ===== FEATURED PROJECT CARDS ===== -->
+        <div class="featured-projects animate delay-2">
+
+          <!-- Project 1: Tales and Treasures -->
+          <article class="featured-card">
+            <div class="featured-logo-wrap" style="background:#fff;">
+              <img src="images/logo-tales.png" alt="Tales and Treasures logo">
+            </div>
+            <div class="featured-body">
+              <div style="display:flex; gap:var(--space-2); margin-bottom:var(--space-3); flex-wrap:wrap;">
+                <span class="tag">Literacy</span>
+                <span class="tag">Community</span>
+                <span class="tag">Nigeria</span>
+              </div>
+              <h3 style="font-size:var(--text-xl); margin-bottom:var(--space-3);">Tales and Treasures</h3>
+              <p style="font-size:var(--text-sm); line-height:1.8;">
+                A literacy-focused initiative dedicated to promoting reading culture among children and communities in Nigeria. The project organises book drives, reading programs, and literacy campaigns aimed at improving access to books and encouraging lifelong learning — using storytelling as a powerful tool for education, creativity, and community transformation.
+              </p>
+              <div class="featured-footer">
+                <code style="font-size:var(--text-xs); color:var(--color-text-3);">talesandtreasures.com.ng</code>
+                <a href="https://talesandtreasures.com.ng" target="_blank" rel="noopener" class="btn btn-primary" style="padding:8px 18px; font-size:var(--text-xs);">Visit Live Site &rarr;</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2: Lumina Literacy -->
+          <article class="featured-card">
+            <div class="featured-logo-wrap" style="background:#fff;">
+              <img src="images/logo-lumina.png" alt="Lumina Literacy logo">
+            </div>
+            <div class="featured-body">
+              <div style="display:flex; gap:var(--space-2); margin-bottom:var(--space-3); flex-wrap:wrap;">
+                <span class="tag">EdTech</span>
+                <span class="tag">Platform</span>
+                <span class="tag">Digital Learning</span>
+              </div>
+              <h3 style="font-size:var(--text-xl); margin-bottom:var(--space-3);">Lumina Literacy</h3>
+              <p style="font-size:var(--text-sm); line-height:1.8;">
+                An educational platform designed to improve literacy development and learning engagement through digital tools and structured educational resources. The platform focuses on helping learners build stronger reading foundations and making literacy education more accessible through modern technology.
+              </p>
+              <div class="featured-footer">
+                <code style="font-size:var(--text-xs); color:var(--color-text-3);">luminaliteracy.com.ng</code>
+                <a href="https://luminaliteracy.com.ng" target="_blank" rel="noopener" class="btn btn-primary" style="padding:8px 18px; font-size:var(--text-xs);">Visit Live Site &rarr;</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3: Overwatch -->
+          <article class="featured-card">
+            <div class="featured-logo-wrap" style="background:#07142b;">
+              <img src="images/logo-overwatch.png" alt="Overwatch security platform logo">
+            </div>
+            <div class="featured-body">
+              <div style="display:flex; gap:var(--space-2); margin-bottom:var(--space-3); flex-wrap:wrap;">
+                <span class="tag">AI Security</span>
+                <span class="tag">Surveillance</span>
+                <span class="tag">Real-Time</span>
+              </div>
+              <h3 style="font-size:var(--text-xl); margin-bottom:var(--space-3);">Overwatch</h3>
+              <p style="font-size:var(--text-sm); line-height:1.8;">
+                An AI-powered virtual security platform that combines surveillance systems with human intelligence to provide proactive guarding and monitoring solutions. It transforms traditional CCTV into an active security asset through real-time monitoring, threat detection, and incident reporting — improving safety and response efficiency.
+              </p>
+              <div class="featured-footer">
+                <code style="font-size:var(--text-xs); color:var(--color-text-3);">overwatchmoz.com</code>
+                <a href="https://overwatchmoz.com" target="_blank" rel="noopener" class="btn btn-primary" style="padding:8px 18px; font-size:var(--text-xs);">Visit Live Site &rarr;</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ===== GRAPHIC DESIGN SECTION ===== -->
+        <div class="design-section animate delay-3" style="margin-top: var(--space-16);">
+
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:var(--space-8); flex-wrap:wrap; gap:var(--space-4);">
+            <div>
+              <p class="section-label" style="margin-bottom:var(--space-3);">Graphic Design</p>
+              <h2 style="font-size:var(--text-3xl); margin-bottom:var(--space-3);">Overwatch LinkedIn Campaign</h2>
+              <p style="max-width:580px; font-size:var(--text-sm);">
+                A full LinkedIn content design series produced for the Overwatch security platform launch — from announcement posts to conversion-focused creative assets.
+              </p>
+            </div>
+            <div style="display:flex; gap:var(--space-2); flex-wrap:wrap;">
+              <span class="tag">LinkedIn</span>
+              <span class="tag">Brand Design</span>
+              <span class="tag">Launch Campaign</span>
+            </div>
+          </div>
+
+          <!-- Lightbox viewer -->
+          <div id="design-lightbox" style="display:none; position:fixed; inset:0; z-index:9000; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; padding: 60px 80px; flex-direction:column;">
+            <button id="lb-close" aria-label="Close" style="position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1;z-index:10;">&#10005;</button>
+            <button id="lb-prev" aria-label="Previous" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:1.5rem;cursor:pointer;border-radius:8px;padding:12px 16px;transition:background 0.2s;z-index:10;">&#8592;</button>
+            
+            <img id="lb-img" src="" alt="Design post" style="width:auto; height:auto; max-width:100%; max-height:100%; object-fit:contain; border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,0.8);">
+            
+            <button id="lb-next" aria-label="Next" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:1.5rem;cursor:pointer;border-radius:8px;padding:12px 16px;transition:background 0.2s;z-index:10;">&#8594;</button>
+            <div id="lb-caption" style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.8);font-size:0.85rem;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;z-index:10;"></div>
+          </div>
+
+          <!-- Design grid -->
+          <div id="design-gallery" style="display:grid; grid-template-columns:repeat(5,1fr); gap:var(--space-4);">
+
+            <figure class="design-card" data-index="0" tabindex="0" role="button" aria-label="View Post 12 – Site Assessment" style="margin:0;cursor:pointer;">
+              <div class="design-thumb">
+                <img src="images/design-post-12.png" alt="Post 12 – Site Assessment (Consultative)" loading="lazy">
+              </div>
+              <figcaption class="design-caption">Post 12 &mdash; Site Assessment</figcaption>
+            </figure>
+
+            <figure class="design-card" data-index="1" tabindex="0" role="button" aria-label="View Bonus – Official Launch" style="margin:0;cursor:pointer;">
+              <div class="design-thumb">
+                <img src="images/design-bonus.png" alt="Bonus – Official Launch (Now Live)" loading="lazy">
+              </div>
+              <figcaption class="design-caption">Bonus &mdash; Official Launch</figcaption>
+            </figure>
+
+            <figure class="design-card" data-index="2" tabindex="0" role="button" aria-label="View Post 10 – Why We Are Launching" style="margin:0;cursor:pointer;">
+              <div class="design-thumb">
+                <img src="images/design-post-10.png" alt="Post 10 – Why We Are Launching (Purpose)" loading="lazy">
+              </div>
+              <figcaption class="design-caption">Post 10 &mdash; Purpose</figcaption>
+            </figure>
+
+            <figure class="design-card" data-index="3" tabindex="0" role="button" aria-label="View Post 13 – Launch Eve" style="margin:0;cursor:pointer;">
+              <div class="design-thumb">
+                <img src="images/design-post-13.png" alt="Post 13 – Launch-eve conversion push" loading="lazy">
+              </div>
+              <figcaption class="design-caption">Post 13 &mdash; Launch Eve</figcaption>
+            </figure>
+
+            <figure class="design-card" data-index="4" tabindex="0" role="button" aria-label="View Overwatch Ad Flyer" style="margin:0;cursor:pointer;">
+              <div class="design-thumb">
+                <img src="images/design-flyer-1.png" alt="Overwatch Ad Flyer" loading="lazy">
+              </div>
+              <figcaption class="design-caption">Flyer &mdash; Ad Campaign</figcaption>
+            </figure>
+
+          </div>
+        </div><!-- /design-section -->
+
+        <!-- ===== VIDEO REEL SECTION ===== -->
+        <div class="reel-section animate delay-3">
+
+          <!-- Section header -->
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:var(--space-8); flex-wrap:wrap; gap:var(--space-4);">
+            <div>
+              <p class="section-label" style="margin-bottom:var(--space-3);">Creative Work</p>
+              <h2 style="font-size:var(--text-3xl); margin-bottom:var(--space-3);">Video Editing</h2>
+              <p style="max-width:580px; font-size:var(--text-sm);">
+                AI-powered creative workflows combining Google Gemini ideation, Magnific Spaces motion conversion, and CapCut editing.
+              </p>
+            </div>
+            <div style="display:flex; gap:var(--space-2); flex-wrap:wrap;">
+              <span class="tag">CapCut</span>
+              <span class="tag">Magnific Spaces</span>
+              <span class="tag">Gemini AI</span>
+            </div>
+          </div>
+
+          <!-- Thumbnail strip — click to switch video -->
+          <div class="reel-thumbs" id="reel-thumbs" role="list" style="margin-bottom: var(--space-4);">
+
+            <div class="reel-thumb active" data-src="media/reel-overwatch-1_h264.mp4" data-title="Overwatch - Reel 1" data-index="1" role="listitem" tabindex="0" aria-label="Play Overwatch Reel 1">
+              <video src="media/reel-overwatch-1_h264.mp4" muted preload="auto"></video>
+              <div class="reel-thumb-label">Reel 1</div>
+            </div>
+
+            <div class="reel-thumb" data-src="media/Reels 2.mp4" data-title="Overwatch - Reel 2" data-index="2" role="listitem" tabindex="0" aria-label="Play Overwatch Reel 2">
+              <video src="media/Reels 2.mp4" muted preload="auto"></video>
+              <div class="reel-thumb-label">Reel 2</div>
+            </div>
+
+            <div class="reel-thumb" data-src="media/reel-overwatch-pt_h264.mp4" data-title="Overwatch - Portuguese Ad" data-index="3" role="listitem" tabindex="0" aria-label="Play Overwatch Portuguese Ad">
+              <video src="media/reel-overwatch-pt_h264.mp4" muted preload="auto"></video>
+              <div class="reel-thumb-label">PT Ad</div>
+            </div>
+
+            <div class="reel-thumb" data-src="media/reel-0619_h264.mp4" data-title="Creative Reel - June 2026" data-index="4" role="listitem" tabindex="0" aria-label="Play Creative Reel June 2026">
+              <video src="media/reel-0619_h264.mp4" muted preload="auto"></video>
+              <div class="reel-thumb-label">June '26</div>
+            </div>
+
+          </div>
+
+          <!-- Now playing info -->
+          <div class="reel-meta" style="margin-bottom: var(--space-3);">
+            <div>
+              <div class="reel-now-playing">Now Playing</div>
+              <div class="reel-title-display" id="reel-title">Overwatch - Reel 1</div>
+            </div>
+            <div class="reel-counter" id="reel-counter">1 / 4</div>
+          </div>
+
+          <!-- Main video player -->
+          <div class="reel-player" id="main-player-wrap">
+            <video
+              id="main-video"
+              controls
+              autoplay
+              muted
+              preload="metadata"
+              aria-label="Overwatch Reel 1">
+              <source src="media/reel-overwatch-1_h264.mp4" type="video/mp4">
+              Your browser does not support the HTML5 video element.
+            </video>
+          </div>
+        </div><!-- /reel-section -->
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Ebube Junior Michael &mdash; Miva Open University, Cybersecurity &mdash; 2025/A/CYB/0612</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // ── Design gallery lightbox ───────────────────────────────────────────────
+    (function () {
+      const cards     = Array.from(document.querySelectorAll('.design-card'));
+      const lightbox  = document.getElementById('design-lightbox');
+      const lbImg     = document.getElementById('lb-img');
+      const lbCaption = document.getElementById('lb-caption');
+      const lbClose   = document.getElementById('lb-close');
+      const lbPrev    = document.getElementById('lb-prev');
+      const lbNext    = document.getElementById('lb-next');
+
+      // Build array of image data from the cards
+      const images = cards.map(c => ({
+        src: c.querySelector('img').src,
+        alt: c.querySelector('img').alt,
+        caption: c.querySelector('figcaption').textContent,
+      }));
+
+      let current = 0;
+
+      // Function: open lightbox at index
+      function openAt(index) {
+        current = index;
+        lbImg.src = images[current].src;
+        lbImg.alt = images[current].alt;
+        lbCaption.textContent = images[current].caption;
+        lightbox.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Function: close lightbox
+      function close() {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      // Function: navigate
+      function go(dir) {
+        current = (current + dir + images.length) % images.length;
+        lbImg.src = images[current].src;
+        lbImg.alt = images[current].alt;
+        lbCaption.textContent = images[current].caption;
+      }
+
+      // Event: click each card to open lightbox (Event handling + DOM manipulation)
+      cards.forEach((card, i) => {
+        card.addEventListener('click', () => openAt(i));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAt(i); }
+        });
+      });
+
+      // Event: lightbox controls
+      lbClose.addEventListener('click', close);
+      lbPrev.addEventListener('click',  () => go(-1));
+      lbNext.addEventListener('click',  () => go(+1));
+
+      // Event: click outside image to close
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) close(); });
+
+      // Event: keyboard navigation
+      document.addEventListener('keydown', e => {
+        if (lightbox.style.display !== 'flex') return;
+        if (e.key === 'ArrowLeft')  go(-1);
+        if (e.key === 'ArrowRight') go(+1);
+        if (e.key === 'Escape')     close();
+      });
+    })();
+
+    // ── Reel video switcher ──────────────────────────────────────────────────
+    (function () {
+      const mainVideo  = document.getElementById('main-video');
+      const titleEl   = document.getElementById('reel-title');
+      const counterEl = document.getElementById('reel-counter');
+      const thumbs    = document.querySelectorAll('.reel-thumb');
+      const TOTAL     = thumbs.length;
+
+      // Arrays to store reel data
+      const reels = Array.from(thumbs).map(t => ({
+        el:    t,
+        src:   t.dataset.src,
+        title: t.dataset.title,
+        index: parseInt(t.dataset.index),
+      }));
+
+      function switchReel(reel) {
+        // DOM manipulation — update main player source
+        const src = mainVideo.querySelector('source');
+        src.src = reel.src;
+        mainVideo.load();
+        mainVideo.play().catch(() => {}); // autoplay may be blocked, that's fine
+
+        // Update info strip
+        titleEl.textContent   = reel.title;
+        counterEl.textContent = reel.index + ' / ' + TOTAL;
+
+        // Toggle active state on thumbnails
+        reels.forEach(r => r.el.classList.toggle('active', r === reel));
+      }
+
+      // Event: click on thumbnail
+      thumbs.forEach((thumb, i) => {
+        thumb.addEventListener('click', () => switchReel(reels[i]));
+        // Keyboard accessibility
+        thumb.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            switchReel(reels[i]);
+          }
+        });
+      });
+
+      // Auto-advance to next reel when current ends
+      mainVideo.addEventListener('ended', () => {
+        const current = reels.find(r => r.el.classList.contains('active'));
+        const nextIndex = current ? reels.indexOf(current) + 1 : 0;
+        if (nextIndex < reels.length) switchReel(reels[nextIndex]);
+      });
+    })();
+  </script>
+</body>
+</html>
