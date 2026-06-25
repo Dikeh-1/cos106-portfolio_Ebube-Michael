@@ -307,9 +307,9 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--color-text-1);
-  -webkit-box-shadow: 0 0 0px 1000px var(--color-bg-2) inset;
-  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: #f1f5f9 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #1e293b inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
 }
 
 .error-msg {
